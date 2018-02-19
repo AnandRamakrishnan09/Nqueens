@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[316]:
-
-
 import numpy as np
 import time
 from queue import PriorityQueue
@@ -16,9 +10,6 @@ global pq_list
 pq_list=[]
 
 
-# In[317]:
-
-
 class Node:
     def __init__(self,N=0):
     
@@ -27,16 +18,6 @@ class Node:
         self.h_x=0
         self.cost_so_far=0
         self.parent= None
-
-
-        
-
-        
-        
-
-
-# In[318]:
-
 
 def is_goal(state):
     #checking same row
@@ -113,10 +94,6 @@ def is_goal(state):
             
     return 1
 
-
-# In[319]:
-
-
 def random_state(N):
     
     board=np.zeros((N,N))
@@ -139,10 +116,6 @@ def random_state(N):
     #board=[[0,0,1,0],[0,1,0,0],[1,0,0,0],[0,0,0,1]]
     #board=np.array(board)
     return board
-
-
-# In[320]:
-
 
 def cal_heuristic(state):
     N=len(state)
@@ -235,9 +208,6 @@ def cal_heuristic(state):
     return (10+math.floor((count/2)))
 
 
-# In[321]:
-
-
 def cal_g(state1,state2):
     #print("Inside Cal_g")
     #print (state1)
@@ -253,10 +223,6 @@ def cal_g(state1,state2):
         return (10+(diff*diff))
     else:
         return 10
-
-
-# In[322]:
-
 
 def populate(x):
     global pq
@@ -300,28 +266,6 @@ def populate(x):
             #print(len(pq_list)-1)
                 
                 pq.put((temp.cost_so_far,len(pq_list)-1))
-#                 print("After appending")
-#                 for rn in range(len(pq_list)):
-#                     print(pq_list[rn].state)
-            '''
-            for i in range(len(state)):
-                 state[row][col]=0
-            
-            for i in range(len(state)):
-                state[i][col]=1
-                temp.state=state
-                temp.h_x=cal_heuristic(state)
-               ''' 
-                    
-                
-            
-            
-            
-    
-
-
-# In[323]:
-
 
 def print_soln(state1):
     list_soln=[]
@@ -333,10 +277,6 @@ def print_soln(state1):
         #print("Printing soln")
         a=list_soln.pop()
         print(a)
-
-
-# In[ ]:
-
 
 print("Enter N")
 N=int(input())
