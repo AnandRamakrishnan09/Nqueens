@@ -191,6 +191,8 @@ def populate(x):
             temp.h_x=cal_heuristic(temp.state)
             temp.g_x=cal_g(temp.state,x.state)
             temp.cost_so_far=temp.h_x
+            if(is_goal(temp.state)==1):
+                temp.cost_so_far=0.0
             if np.array_equal(x.state,temp.state)==0:
                 a=copy.deepcopy(temp)
                 pq_list.append(a)
