@@ -5,11 +5,14 @@ import random
 import math
 global pq
 import copy
+#A Global Priority Queue stacked based on the total cost so far and indice of the position of the node in a list
 pq=PriorityQueue()
 global pq_list
+#A Global List into which we append all newly created nodes
 pq_list=[]
 
-
+#A Node is part of the tree and it holds the state of the board, the costs g.x,h.x and the total cost so far.
+#It also has a pointer to its parent Node.
 class Node:
     def __init__(self,N=0):
     
@@ -18,7 +21,7 @@ class Node:
         self.h_x=0
         self.cost_so_far=0
         self.parent= None
-
+#To check if the state is goal (Needs to be optimized)
 def is_goal(state):
     x=np.where(state == 1)
     N=len(state)
@@ -80,16 +83,15 @@ def is_goal(state):
             col1=col1-1
             
     return 1
-
+#Creates Random Board states
 def random_state(N):
-    
     board=np.zeros((N,N))
     print("Creating Random First State for N =",N)
     for x in range(N):
         row=random.randrange(0,N)
         board[row][x]=1
     return board
-
+#Calculates the Heuristic for a given state for each of the cells in a board.
 def cal_heuristic(state):
     N=len(state)
     x=np.where(state == 1)
@@ -101,11 +103,9 @@ def cal_heuristic(state):
         
         
         for i in range(N):
-            if(state[row][i]==1 and i!=col):
-                
+            if(state[row][i]==1 and i!=col):                
                 count=count+1
                 attack.append([[row,col],[row,i]])
-        
         for i in range(N):
             if(state[i][col]==1 and i!=row):
                 count=count+1
@@ -161,7 +161,7 @@ def cal_heuristic(state):
         return 0
     return (10+math.floor((count/2)))
 
-
+#Calculates g(x) given the previous and current states as inputs
 def cal_g(state1,state2):
     if (np.array_equal(state1,state2)==0):
         changed_state=np.absolute(state1-state2)
@@ -171,7 +171,7 @@ def cal_g(state1,state2):
         return (10+(diff*diff))
     else:
         return 10
-
+#Finds all the childrens of a given state.
 def populate(x):
     global pq
     global pq_list
@@ -196,7 +196,7 @@ def populate(x):
                 pq_list.append(a)
                 
                 pq.put((temp.cost_so_far,len(pq_list)-1))
-
+#Prints the path taken from the start state to the solution state.
 def print_soln(state1):
     list_soln=[]
     while(state1.parent!=None):
@@ -206,7 +206,7 @@ def print_soln(state1):
     while(len(list_soln)!=0):
         a=list_soln.pop()
         print(a)
-
+#The main function of the program
 print("Enter N")
 N=int(input())
 time_start=time.clock()
@@ -215,6 +215,7 @@ print("INITIAL START STATE")
 print(start_state)
 start=Node()
 start.state=start_state
+#While loop that goes through all the states
 while(True):
     populate(start)
     next_indice=pq.get()
